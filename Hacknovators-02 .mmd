@@ -1,0 +1,69 @@
+flowchart TD
+    A["🔍 Start: Monitor Email Inbox"] --> B{"📧 New Email Detected?"}
+    B -- No --> A
+    B -- Yes --> C["📎 Extract Email Attachments"]
+    C --> D["🔍 Document Classification"]
+    D --> E{"📄 Document Type?"}
+    E -- Claims Notification --> F["📋 Extract Claim Details"]
+    E -- Bordereaux --> G["📊 Extract Claims Data"]
+    E -- Statement --> H["💰 Extract Account Data"]
+    E -- Unknown --> I["⚠️ Flag for Manual Review"]
+    F --> J["💾 Store in Database"]
+    G --> J
+    H --> J
+    I --> Z["❌ End Process - Manual Required"]
+    J --> K["⏳ Wait for Complete Set"]
+    K --> L{"📚 All Documents<br>Available?"}
+    L -- No --> A
+    L -- Yes --> M["✅ Begin Validation Process"]
+    M --> N{"✅Is Contract active?"}
+    N -- No --> AA["❌Flag as potential fraud"]
+    AA --> X["📊Generate Reports"]
+    N -- Yes --> O{"Does balance in<br> claims statement<br>match total surplus<br>in Bordereau?"}
+    O -- No --> AA
+    O -- Yes --> P{"Damage type in exclusions?"}
+    P -- No --> Q{"❓Duplications in Cash Call Report?"}
+    P -- Yes --> AA
+    Q -- Yes --> AA
+    Q -- No --> R{"Is Total to be paid<br>above treaty limit?"}
+    R -- Yes --> AA
+    R -- No --> S@{ label: "👨‍💼Request Supervisor's<br>Approval" }
+    S --> T{"❓Approved?"}
+    T -- No --> U["Notify StakeHolders<br>Return to Manual Process"]
+    T -- Yes --> V["Login to SICS System"]
+    V --> W["📝Create Claim Entry<br>Add as unsettled"]
+    W --> X
+    X --> Y["🔄Update Database status"]
+    Y --> BB["✅End Process Successfully"]
+
+    S@{ shape: rect}
+    style A fill:#BBDEFB
+    style B fill:#FFE0B2
+    style C fill:#BBDEFB
+    style D fill:#BBDEFB
+    style E fill:#BBDEFB
+    style F fill:#BBDEFB
+    style G fill:#BBDEFB
+    style H fill:#BBDEFB
+    style I fill:#BBDEFB
+    style J fill:#BBDEFB
+    style Z fill:#D50000,color:#FFD600
+    style K fill:#BBDEFB
+    style L fill:#FFE0B2
+    style M fill:#BBDEFB
+    style N fill:#FFE0B2
+    style AA fill:#D50000,color:#FFD600
+    style X fill:#BBDEFB
+    style O fill:#FFE0B2
+    style P fill:#FFE0B2
+    style Q fill:#FFE0B2
+    style R fill:#FFE0B2
+    style S fill:#BBDEFB
+    style T fill:#FFE0B2
+    style U fill:#BBDEFB
+    style V fill:#BBDEFB,stroke:#00C853
+    style W fill:#BBDEFB
+    style Y fill:#BBDEFB
+    style BB fill:#00C853
+
+
